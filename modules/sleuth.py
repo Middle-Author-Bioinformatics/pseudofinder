@@ -1009,12 +1009,12 @@ def main():
         genome = fasta2(genome)
 
         os.system("makeblastdb -dbtype nucl -in %s-fixed.fna -out %s-fixed.fna > /dev/null 2>&1" % (allButTheLast(target_genome, "."), allButTheLast(target_genome, ".")))
-        os.system("blastn -query %s -db %s-fixed.fna -outfmt 6 -out %s/cds.genome.blast -evalue %s -perc_identity %s -qcov_hsp_perc %s -num_threads %s > /dev/null 2>&1" % (
+        os.system("blastn -query %s -db %s-fixed.fna -outfmt \'6 qseqid sseqid pident slen mismatch gapopen qstart qend sstart send evalue bitscore qseq sseq\' -out %s/cds.genome.blast -evalue %s -perc_identity %s -qcov_hsp_perc %s -num_threads %s > /dev/null 2>&1" % (
             ref_genes, allButTheLast(target_genome, "."), outdir, str(e), str(float(args.perc_id)*100), str(float(args.perc_cov)*100), args.threads))
 
     else:
         os.system("makeblastdb -dbtype nucl -in %s -out %s > /dev/null 2>&1" % (target_genome, target_genome))
-        os.system("blastn -query %s -db %s -outfmt 6 -out %s/cds.genome.blast -evalue %s -perc_identity %s -qcov_hsp_perc %s -num_threads %s > /dev/null 2>&1" % (
+        os.system("blastn -query %s -db %s -outfmt \'6 qseqid sseqid pident slen mismatch gapopen qstart qend sstart send evalue bitscore qseq sseq\' -out %s/cds.genome.blast -evalue %s -perc_identity %s -qcov_hsp_perc %s -num_threads %s > /dev/null 2>&1" % (
         ref_genes, target_genome, outdir, e, str(float(args.perc_id)*100), str(float(args.perc_cov)*100), args.threads))
 
     print("Done with BLAST\n.")
